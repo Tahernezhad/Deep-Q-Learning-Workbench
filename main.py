@@ -8,7 +8,7 @@ import gymnasium as gym
 import config
 from dqn_agent import DQNAgent
 from replay_buffer import ReplayBuffer
-from utils import plot_rewards, save_checkpoint, set_seed, save_config
+from utils import plot_rewards, save_checkpoint, set_seed, save_config, save_rewards
 
 
 def main():
@@ -92,6 +92,9 @@ def main():
     # --- Save Final Plot ---
     plot_path = results_dir / "reward_plot.png"
     plot_rewards(total_rewards, plot_path, config.MOVING_AVG_WINDOW)
+    # Save raw rewards data to a .txt file
+    rewards_path = results_dir / "total_rewards.txt"
+    save_rewards(total_rewards, rewards_path)
     env.close()
 
 

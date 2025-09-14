@@ -57,7 +57,6 @@ def save_checkpoint(agent, save_path: Path):
     torch.save(checkpoint, save_path)
 
 
-
 def save_config(config_module, save_path: Path):
     """
     Saves the hyperparameter configuration to a text file.
@@ -68,7 +67,22 @@ def save_config(config_module, save_path: Path):
     with open(save_path, 'w') as f:
         f.write("HYPERPARAMETER CONFIGURATION\n")
         f.write("=" * 30 + "\n")
-        params = {k: v for k, v in config_module.__dict__.items() if k.isupper()}
-        for key, value in params.items():
-            f.write(f"{key}: {value}\n")
+
+        for key, value in config_module.__dict__.items():
+            if not key.startswith('__') and not isinstance(value, type(torch)):
+                f.write(f"{key}: {value}\n")
     print(f"Configuration saved to {save_path}")
+
+
+def save_rewards(rewards: list[float], save_path: Path):
+    """
+    Saves the list of total rewards per episode to a .txt file.
+    Each reward is written on a new line.
+    Args:
+        rewards (list[float]): A list of total rewards for each episode.
+        save_path (Path): The path to save the .txt file.
+    """
+    with open(save_path, 'w') as f:
+        for reward in rewards:
+            f.write(f"{reward}\n")
+    print(f"Rewards data saved to {save_path}")

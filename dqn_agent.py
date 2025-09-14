@@ -3,21 +3,38 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import numpy as np
-from networks import SimpleDQN, DuelingDQN
+from networks import (SimpleDQN, DuelingDQN,
+                    CNN1D_DQN, Dueling_CNN1D_DQN,
+                    LSTM_DQN, Dueling_LSTM_DQN)
+
 
 class DQNAgent:
     """Interacts with and learns from the environment."""
+
     def __init__(self, n_states: int, n_actions: int, config):
+        self.n_states = n_states
         self.n_actions = n_actions
         self.config = config
         self.device = config.DEVICE
 
+        # --- Select and build the appropriate model based on config ---
+        model_map = {
+            'MLP': (SimpleDQN, DuelingDQN),
+            'CNN1D': (CNN1D_DQN, Dueling_CNN1D_DQN),
+            'LSTM': (LSTM_DQN, Dueling_LSTM_DQN),
+        }
+
+        if config.MODEL_TYPE not in model_map:
+            raise ValueError(f"Unknown MODEL_TYPE: {config.MODEL_TYPE}")
+
+        SimpleModel, DuelingModel = model_map[config.MODEL_TYPE]
+
         if config.dueling_network:
-            self.policy_net = DuelingDQN(n_states, config.HIDDEN_LAYER_SIZE, n_actions).to(self.device)
-            self.target_net = DuelingDQN(n_states, config.HIDDEN_LAYER_SIZE, n_actions).to(self.device)
+            self.policy_net = DuelingModel(n_states, config.HIDDEN_LAYER_SIZE, n_actions).to(self.device)
+            self.target_net = DuelingModel(n_states, config.HIDDEN_LAYER_SIZE, n_actions).to(self.device)
         else:
-            self.policy_net = SimpleDQN(n_states, config.HIDDEN_LAYER_SIZE, n_actions).to(self.device)
-            self.target_net = SimpleDQN(n_states, config.HIDDEN_LAYER_SIZE, n_actions).to(self.device)
+            self.policy_net = SimpleModel(n_states, config.HIDDEN_LAYER_SIZE, n_actions).to(self.device)
+            self.target_net = SimpleModel(n_states, config.HIDDEN_LAYER_SIZE, n_actions).to(self.device)
 
         self.target_net.load_state_dict(self.policy_net.state_dict())
         self.target_net.eval()
