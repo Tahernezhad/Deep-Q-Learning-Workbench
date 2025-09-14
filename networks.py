@@ -49,7 +49,6 @@ class DuelingDQN(nn.Module):
         return q_values
 
 
-
 class CNN1D_DQN(nn.Module):
     """1D Convolutional Neural Network for Q-value approximation."""
 

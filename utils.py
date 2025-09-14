@@ -49,11 +49,12 @@ def plot_rewards(rewards: list[float], save_path: Path, moving_avg_window: int):
 def save_checkpoint(agent, save_path: Path):
     """
     Saves the model's state dictionary.
-    Args:
-        agent: The agent whose policy network should be saved.
-        save_path (Path): The path to save the model checkpoint.
     """
-    checkpoint = {'policy_net_state_dict': agent.policy_net.state_dict()}
+    checkpoint = {
+        'policy_net_state_dict': agent.policy_net.state_dict(),
+        'target_net_state_dict': agent.target_net.state_dict(),
+        'optimizer_state_dict': agent.optimizer.state_dict(),
+    }
     torch.save(checkpoint, save_path)
 
 

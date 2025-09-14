@@ -14,6 +14,8 @@ REPLAY_BUFFER_SIZE = 100000
 TARGET_UPDATE_FREQ = 1000
 HIDDEN_LAYER_SIZE = 256
 
+WARMUP_STEPS = 1000
+
 # --- Epsilon-Greedy Strategy ---
 EPSILON_START = 1.0
 EPSILON_END = 0.01
@@ -31,10 +33,15 @@ REPORT_INTERVAL = 100
 MOVING_AVG_WINDOW = 100
 SEED = 42
 
+LOSS = "huber"  # options: "huber", "mse"
+
+SOFT_UPDATE = True
+TAU = 0.005  # Polyak coefficient
+
 # --- Device Configuration ---
 DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # --- Save/Load Settings ---
 SAVE_MODEL = True
 RECORD_VIDEO = True
-VIDEO_RECORD_INTERVAL = 50
+VIDEO_RECORD_INTERVAL = 100

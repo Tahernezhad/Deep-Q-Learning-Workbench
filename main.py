@@ -66,7 +66,9 @@ def main():
 
             agent.optimize_model(memory)
 
-            if total_steps % config.TARGET_UPDATE_FREQ == 0:
+            if config.SOFT_UPDATE:
+                agent.soft_update_target_network(config.TAU)
+            elif total_steps % config.TARGET_UPDATE_FREQ == 0:
                 agent.update_target_network()
 
             if done:

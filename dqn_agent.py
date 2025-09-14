@@ -40,7 +40,7 @@ class DQNAgent:
         self.target_net.eval()
 
         self.optimizer = optim.Adam(self.policy_net.parameters(), lr=config.LEARNING_RATE)
-        self.loss_func = nn.MSELoss()
+        self.loss_func = nn.SmoothL1Loss() if config.LOSS == "huber" else nn.MSELoss()
 
     def select_action(self, state: np.ndarray, epsilon: float) -> int:
         if random.random() > epsilon:
@@ -52,7 +52,7 @@ class DQNAgent:
             return random.randrange(self.n_actions)
 
     def optimize_model(self, memory):
-        if len(memory) < self.config.BATCH_SIZE:
+        if len(memory) < max(self.config.BATCH_SIZE, self.config.WARMUP_STEPS):
             return
 
         states, actions, rewards, next_states, dones = memory.sample(self.config.BATCH_SIZE)
@@ -82,3 +82,7 @@ class DQNAgent:
 
     def update_target_network(self):
         self.target_net.load_state_dict(self.policy_net.state_dict())
+
+    def soft_update_target_network(self, tau: float):
+        for target_param, param in zip(self.target_net.parameters(), self.policy_net.parameters()):
+            target_param.data.copy_(tau * param.data + (1.0 - tau) * target_param.data)
