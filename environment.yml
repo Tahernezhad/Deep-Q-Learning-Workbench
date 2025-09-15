@@ -3,29 +3,23 @@
 # To update this environment, run: conda env update --file environment.yml --prune
 
 name: rl
-
 channels:
   - pytorch
   - nvidia
   - conda-forge
-  - defaults
-
 dependencies:
-  # --- Core Python ---
   - python=3.10
   - pytorch
   - torchvision
   - torchaudio
-  - pytorch-cuda=11.8
-  - box2d-py
-  - pip
-  - pip:
-    - gymnasium[box2d]==1.2.0
-    - finrl[full]
-    - stable-baselines3==2.7.0
-    - moviepy
-    - tqdm
-    - matplotlib
-    - pandas
-    - numpy
-    - scikit-learn
+  - pytorch-cuda=11.8      # needs compatible NVIDIA driver
+  - gymnasium=1.2.*
+  - box2d-py               # LunarLander physics
+  - stable-baselines3=2.7.0
+  - numpy
+  - pandas
+  - matplotlib
+  - scikit-learn
+  - tqdm
+  - moviepy
+  - imageio-ffmpeg         # for video export
