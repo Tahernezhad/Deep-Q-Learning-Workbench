@@ -4,30 +4,30 @@ import torch
 MODEL_TYPE = 'MLP' # Options: 'MLP', 'CNN1D', 'LSTM'
 
 # --- Training Settings ---
-ENV_NAME = 'CartPole-v1'
+ENV_NAME = 'LunarLander-v3' # Options: 'CartPole-v1', 'LunarLander-v3'
 
 # --- Agent Hyperparameters ---
 LEARNING_RATE = 0.0005
 GAMMA = 0.99
 BATCH_SIZE = 64
-REPLAY_BUFFER_SIZE = 100000
+REPLAY_BUFFER_SIZE = 200000
 TARGET_UPDATE_FREQ = 1000
 HIDDEN_LAYER_SIZE = 256
 
-WARMUP_STEPS = 1000
+WARMUP_STEPS = 500
 
 # --- Epsilon-Greedy Strategy ---
 EPSILON_START = 1.0
 EPSILON_END = 0.01
 
-EPSILON_DECAY = 10000
+EPSILON_DECAY = 100000
 
 # --- DQN Variants ---
 double_dqn = True
 dueling_network = True
 
 # --- Training Loop Settings ---
-NUM_EPISODES = 1000
+NUM_EPISODES = 2000
 MAX_STEPS_PER_EPISODE = 1000
 REPORT_INTERVAL = 100
 MOVING_AVG_WINDOW = 100
