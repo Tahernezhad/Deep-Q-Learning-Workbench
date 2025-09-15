@@ -150,19 +150,11 @@ python replay.py \
 
 ---
 
-## 🧪 Roadmap (nice‑to‑have)
+## 🧪 Roadmap
 
 * Prioritized Experience Replay
-* N‑step returns
 * NoisyNets or parameter‑space noise for exploration
 * Frame stacking / sequence sampling for the LSTM path
-* Evaluation script with metrics & CSV logs
-
----
-
-## 📜 License
-
-Choose a license (e.g., MIT) and add a `LICENSE` file.
 
 ---
 
@@ -171,5 +163,4 @@ Choose a license (e.g., MIT) and add a `LICENSE` file.
 * [Gymnasium](https://github.com/Farama-Foundation/Gymnasium)
 * [PyTorch](https://pytorch.org/)
 
-If you use this repo, a star ⭐ is appreciated! PRs and issues welcome.
 
