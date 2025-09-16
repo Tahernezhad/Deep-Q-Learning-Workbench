@@ -1,4 +1,4 @@
-# Deep‑Q‑Learning‑Workbench (PyTorch)
+# Deep Q‑Learning Workbench (PyTorch)
 
 A clean, modular Deep Q‑Learning (DQN) implementation in PyTorch with support for **Double DQN**, **Dueling networks**, and multiple backbones (MLP, 1D‑CNN, LSTM). The repo includes a training script, a replay script (to watch saved policies), video recording, and simple result tracking — designed to be easy to extend to new Gymnasium environments.
 
